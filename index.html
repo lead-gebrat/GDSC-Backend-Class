@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculator-copy</title>
+    <style>
+      body{
+        background-color: white;
+        
+      }
+      .result {
+        margin-top: 10px;
+        font-size: 1.2em;
+        color: white;
+    }
+
+      .operand{
+        height:3em;
+        width:3em;
+        border:none;
+        border-radius:9999px;
+        background-color: orange;
+        color:white;
+        font-weight:bold ;
+      }
+
+      .number{
+        height:3em;
+        width:3em;
+        border:none;
+        border-radius:9999px;
+        background-color: rgb(69, 66, 66);
+        color:white;
+        font-weight: bold;
+      }
+
+      .js-update-calculation{
+        font-size: large;
+        font-weight: bold;
+        color: black;
+        border: 2px;
+        border-width: 4px;
+        border-color: grey;
+        
+      }
+
+      .calculate{
+        background-color: lightblue;
+        border:none;
+        border-radius: 30px;
+        color: black;
+        font-weight: bold;
+        padding: 10px;
+      }
+     
+
+      
+    </style>
+  </head>
+  <body>
+    <h2>Normal Calculator</h2>
+    <div
+     class="calculator"><div class="js-update-calculation"></div></div>
+    <p>
+      <button class="number" onclick="
+      updateCalculation('1')">1</button>
+      <button class="number" onclick="
+      updateCalculation('2')">2</button>
+      <button class="number" onclick="
+      updateCalculation('3')">3</button>
+      <button  class="operand" onclick="
+      updateCalculation(' + ')">+</button>
+  </p>
+  <p>
+      <button class="number" onclick="
+      updateCalculation('4')">4</button>
+      <button class="number" onclick="
+      updateCalculation('5')">5</button>
+      <button class="number" onclick="
+      updateCalculation('6')">6</button>
+      <button  class="operand" onclick="
+      updateCalculation(' - ')">-</button>
+      
+      
+  </p>   
+  <p>
+      <button class="number" onclick="
+      updateCalculation('7')">7</button>
+      <button class="number" onclick="
+      updateCalculation('8')">8</button>
+      <button class="number" onclick="updateCalculation('9')
+      ">9</button>
+      <button  class="operand" onclick="
+      updateCalculation(' * ')">*</button>
+      
+  </p>
+
+  <p>
+    <button class="number" onclick="
+    updateCalculation('0')">0</button>
+    <button class="number" onclick="
+    updateCalculation('.')">.</button>
+    <button class="number" onclick="
+      calculation = eval(calculation);
+      displayCalculation()">=</button>
+      <button  class="operand" onclick="
+      updateCalculation(' / ')">/</button>
+    
+</p>
+<p>
+  <button  class="number" onclick="
+      calculation = '';
+      displayCalculation()
+      localStorage.setItem('calculation', calculation);
+      ">Clear</button>
+</p>
+
+<div>
+  <h2>BMI Calculator</h2>
+  <label for="height">Height (cm):</label>
+  <input type="number" id="height" placeholder="Enter your height in cm">
+  <label for="weight">Weight (kg):</label>
+  <input type="number" id="weight" placeholder="Enter your weight in kg">
+  <button class="calculate" onclick="calculateBMI()">Calculate BMI</button>
+  <div class="result" id="result"></div>
+</div>
+
+
+ 
+    <script>
+      let calculation = localStorage.getItem('caculation') || '';
+
+      displayCalculation();
+      
+      function updateCalculation(value){
+        
+         calculation += value;
+         displayCalculation()
+         localStorage.setItem('calculation', calculation);
+        }
+
+        function displayCalculation() {
+          document.querySelector('.js-update-calculation').innerHTML = calculation;
+        }
+      
+        function calculateBMI() {
+          const heightInput = document.getElementById('height').value;
+          const weightInput = document.getElementById('weight').value;
+          
+          const heightInMeters = heightInput / 100;
+          const bmi = weightInput / (heightInMeters * heightInMeters);
+        
+          const resultElement = document.getElementById('result');
+          resultElement.textContent = `Your BMI is ${bmi.toFixed(2)}`;
+        
+          let bmiCategory = '';
+        
+          if (bmi < 18.5) {
+              bmiCategory = 'Underweight';
+          } else if (bmi >= 18.5 && bmi < 24.9) {
+              bmiCategory = 'Normal weight';
+          } else if (bmi >= 25 && bmi < 29.9) {
+              bmiCategory = 'Overweight';
+          } else {
+              bmiCategory = 'Obesity';
+          }
+        
+          resultElement.textContent += ` - ${bmiCategory}`;
+        }
+    </script>
+  </body>
+</html>
